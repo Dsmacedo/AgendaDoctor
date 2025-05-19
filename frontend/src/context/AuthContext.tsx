@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [userRole, setUserRole] = useState<UserRole>(null);
 
   useEffect(() => {
-    const role = sessionStorage.getItem("userRole") as UserRole;
+    const role = localStorage.getItem("userRole") as UserRole;
     if (role) setUserRole(role);
   }, []);
 

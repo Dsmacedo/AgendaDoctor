@@ -4,9 +4,11 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { Unidade } from './unidade.entity';
 import { Medico } from './medico.entity';
+import { Agendamento } from './agendamento.entity';
 
 @Entity('disponibilidades')
 export class Disponibilidade {
@@ -38,4 +40,7 @@ export class Disponibilidade {
   @ManyToOne(() => Unidade)
   @JoinColumn({ name: 'unidade_id' }) // 👈 Agora também
   unidade: Unidade;
+
+  @OneToMany(() => Agendamento, (agendamento) => agendamento.disponibilidade)
+  agendamentos: Agendamento[];
 }

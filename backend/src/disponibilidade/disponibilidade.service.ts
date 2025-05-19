@@ -31,7 +31,6 @@ export class DisponibilidadeService {
     return disponibilidade;
   }
   ////////////////////////////////////////////////
-  // disponibilidade.service.ts
 
   async findComFiltro(
     medico_id?: number,
@@ -43,6 +42,7 @@ export class DisponibilidadeService {
       .createQueryBuilder('disponibilidade')
       .leftJoinAndSelect('disponibilidade.medico', 'medico')
       .leftJoinAndSelect('disponibilidade.unidade', 'unidade')
+      .leftJoinAndSelect('disponibilidade.agendamentos', 'agendamentos')
       .where('disponibilidade.data >= :data_inicio', {
         data_inicio, // ✅ passar como string no formato correto
       });
@@ -61,7 +61,12 @@ export class DisponibilidadeService {
       });
     }
 
-    return await query.getMany();
+    const disponibilidades = await query.getMany();
+
+    return disponibilidades.map((d) => ({
+      ...d,
+      total_agendados: d.agendamentos.length,
+    }));
   }
 
   /////////////////////////////////////////////////////////////////////////

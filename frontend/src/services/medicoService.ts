@@ -2,7 +2,7 @@ import DoctorFormData from "@/type/doctor_register";
 import { API_URL } from "./api_url/api";
 
 export const cadastrarMedico = async (medicoData: DoctorFormData) => {
-  const token = sessionStorage.getItem("token"); // ou localStorage, dependendo do que você usou
+  const token = localStorage.getItem("token"); // ou localStorage, dependendo do que você usou
 
   const response = await fetch(`${API_URL}/medicos`, {
     method: "POST",
@@ -22,7 +22,7 @@ export const cadastrarMedico = async (medicoData: DoctorFormData) => {
 };
 
 export const getMedicos = async () => {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const response = await fetch(`${API_URL}/medicos`, {
     headers: {

@@ -11,6 +11,7 @@ import { getUnidades } from "@/services/unidadeService";
 import { getDisponibilidadesComFiltro } from "@/services/consultaDisponibilidadeService";
 
 import SymptomModal from "./SimtomasModal/SymptomModal";
+import { agendarConsulta } from "@/services/agendamentoService";
 
 type FiltrosConsulta = {
   unidade_id: string;
@@ -86,10 +87,43 @@ const ConsultaDisponibilidade = () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmitSintomas = (sintomas: string) => {
-    console.log("📋 Consulta:", consultaSelecionada);
-    console.log("🩺 Sintomas:", sintomas);
-    // Aqui você pode enviar para backend ou salvar de alguma forma
+  const handleSubmitSintomas = async (sintomas: string) => {
+    if (!consultaSelecionada) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Usuário não autenticado");
+        return;
+      }
+
+      await agendarConsulta({
+        disponibilidade_id: consultaSelecionada.id,
+        sintomas,
+      });
+
+      alert("Consulta agendada com sucesso!");
+      buscarConsultas();
+      setIsModalOpen(false);
+    } catch (err: any) {
+      console.error("Erro ao agendar:", err);
+
+      console.log("⚠️ Erro completo do backend:", err?.response?.data);
+
+      const backendMessage =
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        err.message;
+
+      if (
+        typeof backendMessage === "string" &&
+        backendMessage.includes("já agendou")
+      ) {
+        alert("Você já agendou essa consulta");
+      } else {
+        alert("Erro ao agendar consulta. Tente novamente.");
+      }
+    }
   };
 
   return (
@@ -186,7 +220,8 @@ const ConsultaDisponibilidade = () => {
                   {consulta.medico.especialidade}
                 </p>
                 <p>
-                  <strong>Limite:</strong> {consulta.capacidade_maxima}
+                  <strong>Limite:</strong> {consulta.total_agendados}/
+                  {consulta.capacidade_maxima}
                 </p>
                 <button
                   className="bg-greencolor text-white mt-2 px-4 py-2 rounded"

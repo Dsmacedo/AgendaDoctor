@@ -17,7 +17,7 @@ export const cadastrarUnidade = async (data: UnidadeFormData) => {
 };
 
 export const getUnidades = async () => {
-  const token = sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   const res = await fetch(`${API_URL}/unidades`, {
     headers: {

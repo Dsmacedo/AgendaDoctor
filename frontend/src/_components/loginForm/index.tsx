@@ -27,10 +27,10 @@ const LoginForm = () => {
 
       setUserRole(role);
 
-      sessionStorage.setItem("userRole", role);
-      sessionStorage.setItem("token", token);
-      // localStorage.setItem("userRole", role);
-      // localStorage.setItem("token", token);
+      // sessionStorage.setItem("userRole", role);
+      // sessionStorage.setItem("token", token);
+      localStorage.setItem("userRole", role);
+      localStorage.setItem("token", token);
 
       document.cookie = `token=${token}; path=/; max-age=3600; SameSite=Lax`;
 

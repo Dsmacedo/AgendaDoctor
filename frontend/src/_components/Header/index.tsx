@@ -24,8 +24,8 @@ export default function Header() {
 
   const handleLogout = () => {
     // Remove do sessionStorage
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("userRole");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
 
     // Limpa o cookie 'token' que é usado pelo middleware
     document.cookie = "token=; Max-Age=0; path=/";

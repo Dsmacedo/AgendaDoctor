@@ -12,7 +12,7 @@ const Section = () => {
   const [filteredCards, setFilteredCards] = useState<typeof cardsData>([]);
 
   useEffect(() => {
-    const role = sessionStorage.getItem("userRole");
+    const role = localStorage.getItem("userRole");
 
     if (!role) {
       window.location.href = "/login";

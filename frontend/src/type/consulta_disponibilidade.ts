@@ -7,6 +7,7 @@ export type Disponibilidade = {
   hora_inicio: string;
   hora_fim: string;
   capacidade_maxima: number;
+  total_agendados: number;
   medico: Medico;
   unidade: Unidade;
 };

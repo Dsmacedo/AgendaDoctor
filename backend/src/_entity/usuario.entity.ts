@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Agendamento } from './agendamento.entity';
 
 @Entity('users')
 export class Usuario {
@@ -43,4 +44,7 @@ export class Usuario {
 
   @Column()
   estado: string;
+
+  @OneToMany(() => Agendamento, (agendamento) => agendamento.usuario)
+  agendamentos: Agendamento[];
 }

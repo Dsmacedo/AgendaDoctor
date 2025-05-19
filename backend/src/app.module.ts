@@ -13,6 +13,8 @@ import { Medico } from './_entity/medico.entity';
 import { Unidade } from './_entity/unidade.entity';
 import { Especialidade } from './_entity/especialidade.entity';
 import { Disponibilidade } from './_entity/disponibilidade.entity';
+import { Agendamento } from './_entity/agendamento.entity';
+import { AgendamentoModule } from './agendamento/agendamento.module';
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { Disponibilidade } from './_entity/disponibilidade.entity';
         Unidade,
         Especialidade,
         Disponibilidade,
+        Agendamento,
       ],
       synchronize: true,
     }),
@@ -40,6 +43,7 @@ import { Disponibilidade } from './_entity/disponibilidade.entity';
     UnidadeModule,
     EspecialidadeModule,
     DisponibilidadeModule,
+    AgendamentoModule,
   ],
 })
 export class AppModule {}
